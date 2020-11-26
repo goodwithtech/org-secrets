@@ -64,9 +64,9 @@ if [ -z "${USER}" ]; then
   exit 1
 fi
 
-ghorg clone "${USER}" -t "${TOKEN}" -c "${MODE}" -s "${SERVICE}" -b "${BRANCH}"  -p /root/git
+ghorg clone "${USER}" -t "${TOKEN}" -c "${MODE}" -s "${SERVICE}" -b "${BRANCH}"  -p /root/git --output-dir mnt
 
 for f in `\find /root/git/ -type d -name ".git"`; do
   echo "Start scanning ${f%/.git}"
-  shhgit -local ${f%/.git}
+  shhgit -silent -local ${f%/.git}
 done
