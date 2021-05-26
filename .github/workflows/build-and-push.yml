@@ -1,23 +1,44 @@
 name: buildimage
 on:
   schedule:
-    - cron:  '0 0 * * *'
+    - cron:  '32 0 * * *'
   pull_request:
     branches: master
   push:
     branches: master
 jobs:
-  buildimage:
-    name: build image
+  docker:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      -
+        name: Checkout
         uses: actions/checkout@v2
-
-      - name: Build and push Docker images
-        uses: docker/build-push-action@v1
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: tomoyamachi/org-secrets
-          tags: latest
+          password: ${{ secrets.DOCKER_TOKEN }}
+      -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            tomoyamachi/org-secrets:latest
+            ghcr.io/tomoyamachi/org-secrets:latest
