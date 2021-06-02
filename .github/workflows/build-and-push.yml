@@ -40,5 +40,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            tomoyamachi/org-secrets:latest
-            ghcr.io/tomoyamachi/org-secrets:latest
+            goodwithtech/org-secrets:latest
+            ghcr.io/goodwithtech/org-secrets:latest
