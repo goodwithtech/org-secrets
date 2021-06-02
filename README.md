@@ -15,15 +15,26 @@ Note: This image needs to put personal access tokens from stdin. You should revo
 3. Delete Personal Access Token from git hosting services.
 
 ```shell
-$ docker run --rm -it goodwithtech/org-secrets -t <github_token> -u goodwithtech -f -a
+# Check target organization's repositories (-o)
+$ docker run --rm -it goodwithtech/org-secrets -o goodwithtech -t <github_token> -f -a
 ...
-121 repos found in goodwithtech
-Success cloning repo: https://github.com/goodwithtech/docker-transcribe.git -> branch: master
-Success cloning repo: https://github.com/goodwithtech/adoptimizer.git -> branch: master
-Success cloning repo: https://github.com/goodwithtech/DB_tech.git -> branch: master
-Success cloning repo: https://github.com/goodwithtech/cucumber-api.git -> branch: master
-Success cloning repo: https://github.com/goodwithtech/bazel-cpp-sample.git -> branch: master
-Success cloning repo: https://github.com/goodwithtech/evm.git -> branch: master
+Success cloning repo: https://github.com/goodwithtech/dummy-for-org-secrets.git -> branch: main
+Success cloning repo: https://github.com/goodwithtech/org-secrets.git -> branch: master
+Success cloning repo: https://github.com/goodwithtech/dockle.git -> branch: master
+Success cloning repo: https://github.com/goodwithtech/dockertags.git -> branch: master
+Start scanning /secrets_ghorg/dockle
+Start scanning /secrets_ghorg/dummy-for-org-secrets
+[/secrets_ghorg/dummy-for-org-secrets] Matching file /.env for Environment configuration file
+[/secrets_ghorg/dummy-for-org-secrets] 1 match for AWS Access Key ID Value in file /config.toml: AKIA1111111111111111
+
+# Check target user's repositories (-u)
+$ docker run --rm -it goodwithtech/org-secrets -u tomoyamachi -t <github_token> -f -a
+...
+121 repos found in tomoyamachi
+Success cloning repo: https://github.com/tomoyamachi/docker-transcribe.git -> branch: master
+Success cloning repo: https://github.com/tomoyamachi/adoptimizer.git -> branch: master
+Success cloning repo: https://github.com/tomoyamachi/cucumber-api.git -> branch: master
+Success cloning repo: https://github.com/tomoyamachi/bazel-cpp-sample.git -> branch: master
 ...
 Start scanning /root/git/mnt_ghorg/invt
 [/root/git/mnt_ghorg/invt] Matching file /config/database.yml for Potential Ruby On Rails database configuration file
